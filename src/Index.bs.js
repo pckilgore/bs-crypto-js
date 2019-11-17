@@ -2,7 +2,7 @@
 'use strict';
 
 var Sha1 = require("crypto-js/sha1");
-var Sha3 = require("crypto-js/sha3");
+var HmacSha3 = require("crypto-js/hmac-sha3");
 var EncLatin1 = require("crypto-js/enc-latin1");
 
 var hash = Sha1("This is my string");
@@ -11,7 +11,7 @@ console.log(hash.toString());
 
 console.log(EncLatin1.stringify(hash));
 
-var hmacHash = Sha3("whoa dude");
+var hmacHash = HmacSha3("whoa dude", "SuperSecretKey");
 
 console.log(hmacHash.toString());
 
