@@ -1,7 +1,7 @@
 {
   "name": "@pckilgore/bs-crypto-js",
   "private": false,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "clean": "bsb -clean-world",
     "build": "bsb -make-world",
