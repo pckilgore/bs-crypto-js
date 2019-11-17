@@ -1,6 +1,6 @@
 # bs-crypto-js
 
-Bucklescript bindings for (crypto-js)[https://github.com/brix/crypto-js]@(3.1.9-1)[https://www.npmjs.com/package/crypto-js/v/3.1.9-1]
+Bucklescript bindings for [crypto-js](https://github.com/brix/crypto-js)@[3.1.9-1](https://www.npmjs.com/package/crypto-js/v/3.1.9-1)
 
 ## Current State
 
