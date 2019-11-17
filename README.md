@@ -1,104 +1,40 @@
-## bs-BigInteger.js
+# bs-crypto-js
 
-[![npm version](https://badge.fury.io/js/%40pckilgore%2Fbs-biginteger.svg)](https://badge.fury.io/js/%40pckilgore%2Fbs-biginteger)
+Bucklescript bindings for (crypto-js)[https://github.com/brix/crypto-js]@(3.1.9-1)[https://www.npmjs.com/package/crypto-js/v/3.1.9-1]
 
-[BuckleScript](https://github.com/bloomberg/bucklescript) bindings over [BigInteger.js](https://github.com/peterolson/BigInteger.js)@1.6.x
+## Current State
 
-## How do I use this?
+Minimal bindings over hasing function APIs I needed for another project (SHA / HMAC). **There are no cipher (encrypt/decrypt) bindings**.
 
-For specifics, see the [documentation for BigInteger@1.6.47, from which this library was based](https://www.npmjs.com/package/big-integer/v/1.6.47).
+Moreover, the typing could probably be better. According to these bindings, all `wordArray`s are the same, when they should probably be algo-specific. So if you call a SHA1 decoder on a SHA3 encoded hash, don't expect the type system to be much help.
 
-## Status
-As far as I am aware, all methods from version 1.6.47 are supported, to some extent.  
+I am more than happy to guide someone through the process of adding additional bindings or reorganizing this repo to be better typed (probably submodule-per-algo will be best but I'm open to all ideas).
 
-Notable omissions are:
- * *the constructor* (does not support alphabet or caseSensitive arguments).
- * `isProbablePrime` (does not support iterations or rng arguments)
- * `isInstance` (we have a type checker!!!!)
- * `randBetween` (does not support rng argument)
- * `toString` (does not support alphabet argument)
+This library may rapidly iterate until version 1.x.x. If you would like to use it now, I suggest pinning to a specific version in your package json.
 
-There are even some minor improvements, such as variant types for comparison operations, rather than `-1`, `0`, `1`.
+## Installation
 
-However, there is no in-library error handling! In particular, if you do something crazy with the `String(string) polymorphic argument, you may see runtime errors unless you catch and handle them:
-
-```reason
-let x = BigInteger.bigInt(`String("IAmNotANumber"));
-Js.log("I am unreachable due to an unhandled type error above");
+```console
+$ npm install @pckilgore/bs-crypto-js
 ```
 
-Add as much error handling to your own code as you think appropriate given your use case, for example:
+or
 
-### Option variant
-```reason
-let x =
-  try (Some(BigInteger.bigInt(`String("IAmNotAValidNumber")))) {
-  | _ => None
-  };
-
-switch (x) {
-| Some(bigInteger) => Js.log2("I'm a bigInt", bigInteger)
-| None => Js.log("Oh no, there was an error")
-};
-// Logs "Oh no, there was an error".
+```console
+$ yarn add @pckilgore/bs-crypto-js
 ```
 
-### Belt.Result (polymorphic variant error type)
-```reason
-let suspiciousFunction = stringOfInt =>
-  try (Belt.Result.Ok(BigInteger.bigInt(`String(stringOfInt)))) {
-  | Js.Exn.Error(e) =>
-    Belt.Result.Error(
-      switch (Js.Exn.name(e)) {
-      | Some(error) =>
-        switch (error) {
-        | "Error" => `BigIntegerError(e)
-        | _ => `UnmatchedError(e)
-        }
-      | None => `SomeUnknownError
-      },
-    )
-  };
+## Examples
 
-let handleResult =
-  fun
-  | Belt.Result.Ok(bigInteger) => Js.log(bigInteger)
-  | Belt.Result.Error(err) =>
-    switch (err) {
-    | `BigIntegerError(_) => Js.log("1")
-    | `UnmatchedError(_) => Js.log("2")
-    | `SomeUnknownError => Js.log("3")
-    };
+```reasonml
+let hash = CryptoJs.sha1("This is my string");
+Js.log(hash->CryptoJs.toString);
+// 37fb219bf98bee51d2fdc3ba6d866c97f06c8223
 
-suspiciousFunction("IamNotValid")->handleResult;
-// ^^ Logs 1
-suspiciousFunction("777")->handleResult;
-// ^^ Logs "Integer { value: 777n }"
+Js.log(CryptoJs.(stringify(latin1, hash)));
+// 7û!îQÒýÃºmlðl#
+
+let hmacHash = CryptoJs.sha3("whoa dude");
+Js.log(hmacHash->toString)
+// 0a5fd70911434cc1fcfaad238dcc55d51125a5ea09789aa5ec2af4b91eeb8f091b738a24c4819451efdc0b3e5164ef9da0d571ff5252ea963121865a39cd0781
 ```
-
-### Exception
-
-For convenience, this library exports `exception BigIntegerException`.  You should prefer the other options above though! 
-
-```reason
-let suspiciousFunction = stringOfInt =>
-  try (BigInteger.bigInt(`String(stringOfInt))) {
-  | _ => raise(BigInteger.BigIntegerException)
-  };
-
-switch (suspiciousFunction("I am not a valid number")) {
-| bigInteger => Js.log(bigInteger)
-| exception BigInteger.BigIntegerException => Js.log("There was an error!")
-};
-// ^^ Logs "error"
-
-switch (suspiciousFunction("777")) {
-| bigInteger => Js.log(bigInteger)
-| exception BigInteger.BigIntegerException => Js.log("There was an error!")
-};
-// ^^ Logs "Integer { value: 777n }"
-
-```
-
-# Contributing
-Contributions are welcome, especially for the small portions of this library that lacks coverage by typings.

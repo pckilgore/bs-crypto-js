@@ -22,7 +22,7 @@ type encoder;
 
 // Encoding Methods
 [@bs.send] external parse: (encoder, string) => wordArray = "parse";
-[@bs.send] external stringify: (encoder, wordArray) => string = "strinfigy";
+[@bs.send] external stringify: (encoder, wordArray) => string = "stringify";
 
 [@bs.send] external toString: wordArray => string = "toString";
 
