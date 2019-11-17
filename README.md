@@ -34,7 +34,7 @@ Js.log(hash->CryptoJs.toString);
 Js.log(CryptoJs.(stringify(latin1, hash)));
 // 7û!îQÒýÃºmlðl#
 
-let hmacHash = CryptoJs.sha3("whoa dude");
+let hmacHash = CryptoJs.hmacSha3("whoa dude", "SuperSecretKey");
 Js.log(hmacHash->toString)
 // bc1b2108c3860e1c85683b74cbec9d4824b1fd1b27b0779de7b8582ecaa6d8af6cb26233dd690263fcdbec3adb6e5112c0054e0ad0c0b7a65fa4b18a424159bf
 ```
