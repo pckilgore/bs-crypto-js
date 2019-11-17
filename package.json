@@ -1,0 +1,38 @@
+{
+  "name": "@pckilgore/bs-crypto-js",
+  "private": false,
+  "version": "0.1.0",
+  "scripts": {
+    "clean": "bsb -clean-world",
+    "build": "bsb -make-world",
+    "watch": "bsb -make-world -w"
+  },
+  "description": "Bucklescript bindings for crypto-js",
+  "keywords": [
+    "BuckleScript",
+    "crypto",
+    "crypto-js",
+    "hash",
+    "security",
+    "ReasonML"
+  ],
+  "homepage": "https://github.com/pckilgore/bs-crypto-js#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pckilgore/bs-crypto-js"
+  },
+  "bugs": {
+    "url": "https://github.com/pckilgore/bs-crypto-js/issues"
+  },
+  "author": "Patrick Kilgore",
+  "license": "MIT",
+  "devDependencies": {
+    "bs-platform": "^5.2.1"
+  },
+  "dependencies": {
+    "crypto-js": "3.1.9-1"
+  },
+  "peerDependencies": {
+    "bs-platform": "^5.2.1"
+  }
+}
