@@ -5,5 +5,8 @@ var Caml_exceptions = require("bs-platform/lib/js/caml_exceptions.js");
 
 var CryptoJsException = Caml_exceptions.create("CryptoJs.CryptoJsException");
 
+var WordArray = { };
+
 exports.CryptoJsException = CryptoJsException;
+exports.WordArray = WordArray;
 /* No side effect */
