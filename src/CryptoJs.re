@@ -32,10 +32,22 @@ module WordArray = {
 [@bs.send] external stringify: (encoder, WordArray.t) => string = "stringify";
 
 // Hashing functions
-[@bs.module] external sha1: string => WordArray.t = "crypto-js/sha1";
-[@bs.module] external sha256: string => WordArray.t = "crypto-js/sha256";
-[@bs.module] external sha512: string => WordArray.t = "crypto-js/sha512";
-[@bs.module] external sha3: string => WordArray.t = "crypto-js/sha3";
+[@bs.module]
+external sha1:
+  ([@bs.unwrap] [ | `String(string) | `WordArr(WordArray.t)]) => WordArray.t =
+  "crypto-js/sha1";
+[@bs.module]
+external sha256:
+  ([@bs.unwrap] [ | `String(string) | `WordArr(WordArray.t)]) => WordArray.t =
+  "crypto-js/sha256";
+[@bs.module]
+external sha512:
+  ([@bs.unwrap] [ | `String(string) | `WordArr(WordArray.t)]) => WordArray.t =
+  "crypto-js/sha512";
+[@bs.module]
+external sha3:
+  ([@bs.unwrap] [ | `String(string) | `WordArr(WordArray.t)]) => WordArray.t =
+  "crypto-js/sha3";
 
 // HMAC
 [@bs.module]
