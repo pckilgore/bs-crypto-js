@@ -27,7 +27,7 @@
   "author": "Patrick Kilgore",
   "license": "MIT",
   "dependencies": {
-    "crypto-js": "3.2.1"
+    "crypto-js": "4.2.0"
   },
   "devDependencies": {
     "bs-platform": ">4"
